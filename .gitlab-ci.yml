@@ -1,0 +1,37 @@
+pages:
+  stage: deploy
+  script:
+  - mkdir -p public
+  - cd public
+  - find . \( -iname "*.jpg" -or -iname "*.svg" -or -iname "*.png" \) > filelist.txt
+  - |
+    cat <<-EOF >> index.html
+    <style>
+    .single img { display:none; }
+    img { display:inline-block; max-height: 200px; max-width: 90%; margin:5px; border: 5px solid #eee; background: #eee; box-shadow: 0 0 4px -1px #000; }
+    img:hover { border-color: #ccc; }
+    img.full { display:block; margin: 10px 0; max-height: max-content; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    </style>
+    <h1>gallary</h1>
+
+    <script>
+    fetch('./filelist.txt').then(d=> d.text()).then(d=> {
+      d.split('\n').map(src=> {
+        let img = new Image();
+        img.src = src;
+        img.addEventListener('click', function() {
+          this.classList.toggle('full')
+          document.body.classList.toggle('single')
+        })
+        document.body.appendChild(img);
+      })
+    })
+    </script>
+    EOF
+
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+

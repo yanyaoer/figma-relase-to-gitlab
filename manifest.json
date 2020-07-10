@@ -1,0 +1,7 @@
+{
+  "name": "figma-release-to-gitlab",
+  "id": "860386841010018793",
+  "api": "1.0.0",
+  "ui": "./dist/ui.html",
+  "main": "./dist/code.js"
+}

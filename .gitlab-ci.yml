@@ -18,6 +18,7 @@ pages:
     fetch('./filelist.txt').then(d=> d.text()).then(d=> {
       d.split('\n').map(src=> {
         let img = new Image();
+        img.setAttribute('loading', 'layz');
         img.src = src;
         img.addEventListener('click', function() {
           this.classList.toggle('full')
